@@ -6,8 +6,6 @@ namespace SchoolAdmin
 {
     internal class Program
     {
-        enum Weekdagen { Maandag, Dinsdag, Woensdag, Donderdag, Vrijdag, Zaterdag, Zondag };
-
 
         static void Main(string[] args)
         {
@@ -36,7 +34,7 @@ namespace SchoolAdmin
 
 
 
-
+            // git commit 
 
         }
 
