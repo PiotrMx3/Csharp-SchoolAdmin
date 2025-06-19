@@ -10,8 +10,40 @@ namespace SchoolAdmin
         static void Main(string[] args)
         {
 
+            Console.WriteLine("Wat wil jij doen ?\n");
+            Console.WriteLine("1. DemonstreerStudenten Uitvoere\n");
+
+            bool running = true;
+
+            while (running)
+            { 
+                Console.Write("\nMaak een keuze : ");
+                string choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        DemoStudents();
+                        break;
+
+                    case "stop":
+                        running = false;
+                         break;
+             
+
+                    default:
+                        Console.WriteLine("\nOnbekende keuze");
+                        break;
+                }
+
+            }
+
+        }
 
 
+
+        public static void DemoStudents()
+        {
             Student said = new();
             Student mieke = new();
 
@@ -22,6 +54,8 @@ namespace SchoolAdmin
             said.Courses.Add("Programmeren");
             said.Courses.Add("Databanken");
             Student.StudentCounter++;
+            Console.WriteLine($"\n{said.GenerateNameCard()}\n" +
+                $"Werkbelasting van {said.Name}: {said.DetermineWorkload()}u/week");
 
 
 
@@ -31,10 +65,8 @@ namespace SchoolAdmin
             mieke.Courses.Add("Programmeren");
             mieke.Courses.Add("Databanken");
             Student.StudentCounter++;
-
-
-
-            // git commit 
+            Console.WriteLine($"\n{mieke.GenerateNameCard()}\n" +
+                $"Werkbelasting van {mieke.Name}: {mieke.DetermineWorkload()}u/week");
 
         }
 
