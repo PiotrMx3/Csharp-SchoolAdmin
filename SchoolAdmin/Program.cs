@@ -11,7 +11,7 @@ namespace SchoolAdmin
         {
 
             Console.WriteLine("Wat wil jij doen ?\n");
-            Console.WriteLine("1. DemonstreerStudenten Uitvoere\n");
+            Console.WriteLine("1. DemonstreerStudenten Uitvoeren\n");
 
             bool running = true;
 
@@ -51,8 +51,8 @@ namespace SchoolAdmin
             said.Name = "Said Aziz";
             said.BirthDate = new DateTime(2000, 12, 23);
             said.StudentNumber = Student.StudentCounter;
-            said.Courses.Add("Programmeren");
-            said.Courses.Add("Databanken");
+            said.RegisterForCourse("Programmeren");
+            said.RegisterForCourse("Databanken");
             Student.StudentCounter++;
             Console.WriteLine($"\n{said.GenerateNameCard()}\n" +
                 $"Werkbelasting van {said.Name}: {said.DetermineWorkload()}u/week");
@@ -62,8 +62,7 @@ namespace SchoolAdmin
             mieke.Name = "Mike Vermeulen";
             mieke.BirthDate = new DateTime(1998, 1, 1);
             mieke.StudentNumber = Student.StudentCounter;
-            mieke.Courses.Add("Programmeren");
-            mieke.Courses.Add("Databanken");
+            mieke.RegisterForCourse("Communicatie");
             Student.StudentCounter++;
             Console.WriteLine($"\n{mieke.GenerateNameCard()}\n" +
                 $"Werkbelasting van {mieke.Name}: {mieke.DetermineWorkload()}u/week");

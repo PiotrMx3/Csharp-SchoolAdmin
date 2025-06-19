@@ -12,7 +12,7 @@ namespace SchoolAdmin
         public string Name;
         public DateTime BirthDate;
         public uint StudentNumber;
-        public List<string> Courses = new();
+        private List<string> courses = new();
         public static uint StudentCounter = 1;
 
         public string GenerateNameCard()
@@ -22,9 +22,20 @@ namespace SchoolAdmin
 
         public double DetermineWorkload()
         {
-            return this.Courses.Count * 10.00;
+            return this.courses.Count * 10.00;
         }
 
+        public void RegisterForCourse(string course)
+        {
+            if (!this.courses.Contains(course))
+            {
+                this.courses.Add(course);
+            }
+
+
+
+
+        }
 
     }
 }
