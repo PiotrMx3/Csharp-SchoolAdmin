@@ -12,7 +12,8 @@ namespace SchoolAdmin
         public string Name;
         public DateTime BirthDate;
         public uint StudentNumber;
-        private List<string> courses = new();
+        //private List<string> courses = new();
+        private List<CourseResult> coursesResult = new();
         public static uint StudentCounter = 1;
 
         public string GenerateNameCard()
@@ -22,20 +23,59 @@ namespace SchoolAdmin
 
         public double DetermineWorkload()
         {
-            return this.courses.Count * 10.00;
+            return this.coursesResult.Count * 10.00;
         }
 
-        public void RegisterForCourse(string course)
+
+        public void RegisterCourseResult(string course, byte result)
         {
-            if (!this.courses.Contains(course))
+            if(result > 20)
             {
-                this.courses.Add(course);
+                Console.WriteLine("Ongeldig cijfer!");
+                return;
             }
 
+            CourseResult newResult = new();
+            newResult.Name = course;
+            newResult.Result = result;
 
-
+            coursesResult.Add(newResult);
 
         }
+
+
+        public double Average()
+        {
+
+            byte total = 0;
+
+            foreach (var course in this.coursesResult)
+            {
+                total += course.Result;
+            }
+
+            return Math.Round((double)total / coursesResult.Count, 1);
+        }
+
+        public void ShowOverview()
+        {
+            Console.WriteLine("");
+            Console.WriteLine($"{this.Name}");
+            Console.WriteLine($"Werkbelasting: {this.DetermineWorkload()} uren");
+            Console.WriteLine("Cijferrapport");
+            Console.WriteLine("*************");
+
+            foreach (var item in this.coursesResult)
+            {
+              
+                Console.WriteLine($"{item.Name + ":",-20} {item.Result}");     
+            }
+
+            Console.WriteLine($"{"Gemiddelde:",-20} {Average()}");
+            Console.WriteLine("");
+
+        }
+
 
     }
 }
