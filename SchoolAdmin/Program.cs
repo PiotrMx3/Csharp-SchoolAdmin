@@ -48,8 +48,6 @@ namespace SchoolAdmin
         }
 
 
-
-
         public static void DemoCourses()
         {
             
@@ -90,6 +88,8 @@ namespace SchoolAdmin
             communicatie.Students.Add(mieke);
 
             communicatie.ShowOverview();
+
+       
 
             Course programmeren = new();
             programmeren.Title = "Programmeren";
@@ -137,6 +137,7 @@ namespace SchoolAdmin
             Student.StudentCounter++;
             said.ShowOverview();
 
+            Console.WriteLine(said.Age);
 
 
 
@@ -150,6 +151,9 @@ namespace SchoolAdmin
             
             Student.StudentCounter++;
             mieke.ShowOverview();
+
+          
+
 
         }
 

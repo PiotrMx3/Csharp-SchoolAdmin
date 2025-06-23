@@ -12,9 +12,35 @@ namespace SchoolAdmin
         public string Name;
         public DateTime BirthDate;
         public uint StudentNumber;
-        //private List<string> courses = new();
         private List<CourseResult> coursesResult = new();
         public static uint StudentCounter = 1;
+
+
+        public int Age
+        {
+            get
+            {
+                DateTime now = DateTime.Now;
+
+
+                int years = now.Year - this.BirthDate.Year;
+
+                if(this.BirthDate.Month > now.Month)
+                {
+                    years--;
+                }
+                else if (this.BirthDate.Month == now.Month) {
+                    
+                    if(this.BirthDate.Day > now.Day)
+                    {
+                        years--;
+                    }
+
+                }
+
+                    return years;
+            }
+        }
 
         public string GenerateNameCard()
         {
@@ -36,6 +62,7 @@ namespace SchoolAdmin
             }
 
             CourseResult newResult = new();
+
             newResult.Name = course;
             newResult.Result = result;
 
@@ -60,7 +87,7 @@ namespace SchoolAdmin
         public void ShowOverview()
         {
             Console.WriteLine("");
-            Console.WriteLine($"{this.Name}");
+            Console.WriteLine($"{this.Name} ({Age} jaar)");
             Console.WriteLine($"Werkbelasting: {this.DetermineWorkload()} uren");
             Console.WriteLine("Cijferrapport");
             Console.WriteLine("*************");
