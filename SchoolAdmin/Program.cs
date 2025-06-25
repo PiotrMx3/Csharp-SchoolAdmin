@@ -62,7 +62,7 @@ namespace SchoolAdmin
 
 
 
-            Course communicatie = new();
+            Course communicatie = new("Communicatie", new Student[] { mieke, said }, 3);
             communicatie.Title = "Communicatie";
 
             communicatie.Students.Add(said);

@@ -18,12 +18,30 @@ namespace SchoolAdmin
 
 
 
-        public Course()
+        public Course(string title, Student[] students, byte creditPoints)
         {
+            this.Title = title;
+            Students.AddRange(students);
+            this.creditPoints = creditPoints;
             this.id = maxId;
+            AllCourses.Add(this);
+
             maxId++;
 
         }
+
+        public Course(string title, Student[] students) : this(title, students, 3)
+        {
+
+        }
+
+
+        public Course(string title) : this(title, new Student[] {} , 3)
+        {
+
+        }
+
+
 
 
         public byte CreditPoints
@@ -52,7 +70,7 @@ namespace SchoolAdmin
 
         public void ShowOverview()
         {
-            Console.WriteLine($"{this.Title}");
+            Console.WriteLine($"{this.Title} ({Id}) ({CreditPoints})");
 
             foreach (var student in this.Students) 
             {
