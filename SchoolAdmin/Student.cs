@@ -16,6 +16,15 @@ namespace SchoolAdmin
         public static uint StudentCounter = 1;
 
 
+        public Student (string name, DateTime birthDate)
+        {
+            this.Name = name;
+            this.BirthDate = birthDate;
+            this.StudentNumber = StudentCounter;
+            StudentCounter++;
+        }
+
+
         public int Age
         {
             get
