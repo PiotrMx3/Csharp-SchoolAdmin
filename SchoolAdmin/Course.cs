@@ -9,7 +9,7 @@ namespace SchoolAdmin
     internal class Course
     {
         public string Title;
-        public List<Student> Students = new();
+        public List<Student> Students;
         private int id;
         private static int maxId = 1;
         private byte creditPoints;
@@ -18,25 +18,26 @@ namespace SchoolAdmin
 
 
 
-        public Course(string title, Student[] students, byte creditPoints)
+        public Course(string title, List<Student> students, byte creditPoints)
         {
             this.Title = title;
-            Students.AddRange(students);
-            this.creditPoints = creditPoints;
+            this.Students = students;
+            CreditPoints = creditPoints;
             this.id = maxId;
+
             AllCourses.Add(this);
 
             maxId++;
 
         }
 
-        public Course(string title, Student[] students) : this(title, students, 3)
+        public Course(string title, List<Student> students) : this(title, students, 3)
         {
 
         }
 
 
-        public Course(string title) : this(title, new Student[] {} , 3)
+        public Course(string title) : this(title, new List<Student>(), 3)
         {
 
         }
@@ -70,7 +71,7 @@ namespace SchoolAdmin
 
         public void ShowOverview()
         {
-            Console.WriteLine($"{this.Title} ({Id}) ({CreditPoints})");
+            Console.WriteLine($"{this.Title} ({Id}) ({CreditPoints}stp)");
 
             foreach (var student in this.Students) 
             {

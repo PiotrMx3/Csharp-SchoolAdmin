@@ -12,13 +12,21 @@ namespace SchoolAdmin
         private byte result;
 
 
+
+        public CourseResult(string name, byte result)
+        {
+            Name = name;
+            Result = result;
+        }
+
+
         public string Name
         {
             get
             {
                 return this.name;
             }
-            set
+            private set
             {
                 this.name = value;
             }

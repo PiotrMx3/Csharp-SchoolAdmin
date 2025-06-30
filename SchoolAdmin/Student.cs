@@ -70,10 +70,7 @@ namespace SchoolAdmin
                 return;
             }
 
-            CourseResult newResult = new();
-
-            newResult.Name = course;
-            newResult.Result = result;
+            CourseResult newResult = new(course, result);
 
             coursesResult.Add(newResult);
 
