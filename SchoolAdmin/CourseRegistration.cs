@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace SchoolAdmin
 {
-    internal class CourseResult
+    internal class CourseRegistration
     {
         private string name;
-        private byte result;
+        private byte? result;
 
 
 
-        public CourseResult(string name, byte result)
+        public CourseRegistration(string name, byte? result)
         {
             Name = name;
             Result = result;
@@ -32,7 +32,7 @@ namespace SchoolAdmin
             }
         }
 
-        public byte Result
+        public byte? Result
         {
             get
             {
@@ -40,7 +40,7 @@ namespace SchoolAdmin
             }
             set
             {
-                if (value >= 0 && value <= 20)
+                if (value is not null and <= 20)
                 {
                     this.result = value;
                 }

@@ -12,7 +12,7 @@ namespace SchoolAdmin
         public string Name;
         public DateTime BirthDate;
         public uint StudentNumber;
-        private List<CourseResult> coursesResult = new();
+        private List<CourseRegistration> coursesRegistrations = new();
         public static uint StudentCounter = 1;
 
 
@@ -58,11 +58,11 @@ namespace SchoolAdmin
 
         public double DetermineWorkload()
         {
-            return this.coursesResult.Count * 10.00;
+            return this.coursesRegistrations.Count * 10.00;
         }
 
 
-        public void RegisterCourseResult(string course, byte result)
+        public void RegisterCourseResult(string course, byte? result)
         {
             if(result > 20)
             {
@@ -70,9 +70,9 @@ namespace SchoolAdmin
                 return;
             }
 
-            CourseResult newResult = new(course, result);
+            CourseRegistration newResult = new CourseRegistration(course, result);
 
-            coursesResult.Add(newResult);
+            coursesRegistrations.Add(newResult);
 
         }
 
@@ -80,14 +80,19 @@ namespace SchoolAdmin
         public double Average()
         {
 
-            byte total = 0;
+            double total = 0;
+            int counter = 0;
 
-            foreach (var course in this.coursesResult)
+            foreach (var course in this.coursesRegistrations)
             {
-                total += course.Result;
+                if (course.Result is not null)
+                {
+                    total += (double)course.Result;
+                    counter++;
+                }
             }
 
-            return Math.Round((double)total / coursesResult.Count, 1);
+            return Math.Round(total / counter, 1);
         }
 
         public void ShowOverview()
@@ -98,7 +103,7 @@ namespace SchoolAdmin
             Console.WriteLine("Cijferrapport");
             Console.WriteLine("*************");
 
-            foreach (var item in this.coursesResult)
+            foreach (var item in this.coursesRegistrations)
             {
               
                 Console.WriteLine($"{item.Name + ":",-20} {item.Result}");     
