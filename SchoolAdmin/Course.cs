@@ -17,6 +17,21 @@ namespace SchoolAdmin
         public static List<Course> AllCourses = new();
 
 
+        public static Course? SearchCourseById(int searchId)
+        {
+
+
+            for (int i = 0; i < AllCourses.Count; i++)
+            {
+                if (AllCourses[i].Id == searchId)
+                {
+                    return AllCourses[i];
+                } 
+            }
+
+            return null;
+        }
+
 
         public Course(string title, List<Student> students, byte creditPoints)
         {
@@ -26,7 +41,6 @@ namespace SchoolAdmin
             this.id = maxId;
 
             AllCourses.Add(this);
-
             maxId++;
 
         }

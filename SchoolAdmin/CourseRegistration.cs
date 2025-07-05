@@ -8,27 +8,27 @@ namespace SchoolAdmin
 {
     internal class CourseRegistration
     {
-        private string name;
+        private Course course;
         private byte? result;
 
 
 
-        public CourseRegistration(string name, byte? result)
+        public CourseRegistration(Course course, byte? result)
         {
-            Name = name;
+            Course = course;
             Result = result;
         }
 
 
-        public string Name
+        public Course Course
         {
             get
             {
-                return this.name;
+                return this.course;
             }
             private set
             {
-                this.name = value;
+                course = value;
             }
         }
 

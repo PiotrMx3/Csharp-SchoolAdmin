@@ -62,7 +62,7 @@ namespace SchoolAdmin
         }
 
 
-        public void RegisterCourseResult(string course, byte? result)
+        public void RegisterCourseResult(Course course, byte? result)
         {
             if(result > 20)
             {
@@ -105,8 +105,9 @@ namespace SchoolAdmin
 
             foreach (var item in this.coursesRegistrations)
             {
-              
-                Console.WriteLine($"{item.Name + ":",-20} {item.Result}");     
+
+                Console.WriteLine($"{item.Course.Title + ":",-20} {item.Result}");
+
             }
 
             Console.WriteLine($"{"Gemiddelde:",-20} {Average()}");

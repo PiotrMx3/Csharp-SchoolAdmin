@@ -6,7 +6,7 @@ namespace SchoolAdmin
 {
     internal class Program
     {
-        
+
 
         static void Main(string[] args)
         {
@@ -47,8 +47,9 @@ namespace SchoolAdmin
 
             }
 
-        }
 
+        }
+       
 
         public static void DemoCourses()
         {
@@ -58,15 +59,6 @@ namespace SchoolAdmin
 
             List<Student> students = new() { said, mieke };
 
-
-            said.RegisterCourseResult("Communicatie", 12);
-            said.RegisterCourseResult("Programmeren", 15);
-            said.RegisterCourseResult("Webtechnologie", 13);
-
-            
-            mieke.RegisterCourseResult("Communicatie", 13);
-            mieke.RegisterCourseResult("Programmeren", 16);
-            mieke.RegisterCourseResult("Databanken", 14);
 
 
             Course communicatie = new("Communicatie", students, 6);
@@ -91,6 +83,17 @@ namespace SchoolAdmin
 
             databanken.ShowOverview();
 
+            said.RegisterCourseResult(communicatie, 12);
+            said.RegisterCourseResult(programmeren, 15);
+            said.RegisterCourseResult(webtechnologie, 13);
+
+            
+            mieke.RegisterCourseResult(communicatie, 13);
+            mieke.RegisterCourseResult(programmeren, 16);
+            mieke.RegisterCourseResult(databanken, 14);
+
+            
+
 
         }
 
@@ -102,15 +105,31 @@ namespace SchoolAdmin
             Student said = new("Said Aziz", new DateTime(2000, 12, 23));
             Student mieke = new("Mike Vermeulen", new DateTime(1998, 1, 1));
 
-            said.RegisterCourseResult("Communicatie", 12);
-            said.RegisterCourseResult("Programmeren", null);
-            said.RegisterCourseResult("Webtechnologie", 13);
+            List<Student> students = new() { said, mieke };
+
+
+            Course communicatie = new("Communicatie", students, 6);
+
+            Course programmeren = new("Programmeren", students);
+
+            Course webtechnologie = new("Webtechnologie");
+            webtechnologie.Students.Add(said);
+
+            Course databanken = new("Databanken");
+            databanken.Students.Add(mieke);
+
+
+
+
+            said.RegisterCourseResult(communicatie, 12);
+            said.RegisterCourseResult(programmeren, null);
+            said.RegisterCourseResult(webtechnologie, 13);
 
             said.ShowOverview();
 
-            mieke.RegisterCourseResult("Communicatie", 13);
-            mieke.RegisterCourseResult("Programmeren", 16);
-            mieke.RegisterCourseResult("Databanken", 14);
+            mieke.RegisterCourseResult(communicatie, 13);
+            mieke.RegisterCourseResult(programmeren, 16);
+            mieke.RegisterCourseResult(databanken, 14);
             
 
             mieke.ShowOverview();
@@ -135,6 +154,7 @@ namespace SchoolAdmin
                 else
                 {
                     courseInfo.Add(readCsv[i]);
+                   
                 }
 
             }
@@ -145,21 +165,34 @@ namespace SchoolAdmin
 
             Student newStundent = new(readCsv[0], new DateTime(year, month, day));
 
-            foreach (var item in courseInfo)
-            {
-                Console.WriteLine(item);
-            }
+
+            Course communicatie = new("Communicatie");
+            Course programmeren = new("Programmeren");
+            Course webtechnologie = new("Webtechnologie");
+            Course databanken = new("Databanken");
+
 
             for (int i = 0; i < courseInfo.Count; i += 2)  // hier was ook belangrijk dat de teller met 2 verhoogd wordt zo dat jij altijd string + getal hebt
             {
                 byte result = Convert.ToByte(courseInfo[i + 1]);
-                newStundent.RegisterCourseResult(courseInfo[i], result);
+
+                Course? course = Course.SearchCourseById(Convert.ToInt32(courseInfo[i]));
+
+
+                if (course is not null)
+                {
+                    newStundent.RegisterCourseResult(course, result);
+                }
+
             }
 
             newStundent.ShowOverview();
 
 
         }
+
+
+
 
     }
 }
