@@ -10,6 +10,7 @@ namespace SchoolAdmin
 
         static void Main(string[] args)
         {
+            StudyProgram.DemoStudyProgram();
 
             bool running = true;
 
