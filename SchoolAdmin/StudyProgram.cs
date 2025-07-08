@@ -34,10 +34,13 @@ namespace SchoolAdmin
             StudyProgram programmerenProgram = new StudyProgram("Programmeren");
             StudyProgram snbProgram = new StudyProgram("Systeem- en netwerkbeheer");
 
-            programmerenProgram.Courses = new List<Course>(courses);
-            snbProgram.Courses = new List<Course>(courses);
+            programmerenProgram.Courses = Course.coursesCopy(courses);
+            snbProgram.Courses = Course.coursesCopy(courses);
 
             snbProgram.Courses.Remove(databanken);
+
+            snbProgram.Courses[1].Title = "Scripting";
+
 
             programmerenProgram.ShowOverview();
             snbProgram.ShowOverview();

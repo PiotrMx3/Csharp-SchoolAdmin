@@ -58,6 +58,29 @@ namespace SchoolAdmin
 
 
 
+        public static List<Course> coursesCopy(List<Course> coursesList)
+        {
+            List<Course> copy = new();
+
+            for (int i = 0; i < coursesList.Count; i++)
+            {
+                Course copyCourse = coursesList[i].Clone();
+                copy.Add(copyCourse);
+            }
+
+            return copy;
+        }
+        public Course Clone()
+        {
+            Course copy = new Course(this.Title);
+            copy.Students = this.Students;
+            copy.id = this.Id;
+            copy.creditPoints = this.CreditPoints;
+
+            return copy;
+        }
+
+
 
         public byte CreditPoints
         {
