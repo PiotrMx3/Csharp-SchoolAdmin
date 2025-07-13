@@ -10,7 +10,6 @@ namespace SchoolAdmin
 
         static void Main(string[] args)
         {
-            StudyProgram.DemoStudyProgram();
 
             bool running = true;
 
@@ -19,7 +18,8 @@ namespace SchoolAdmin
                 Console.WriteLine("Wat wil jij doen ?\n");
                 Console.WriteLine("1. DemonstreerStudenten Uitvoeren");
                 Console.WriteLine("2. DemonstreerCurssusen Uitvoeren");
-                Console.WriteLine("3. ReadTextFormatStudent Uitvoeren\n");
+                Console.WriteLine("3. ReadTextFormatStudent Uitvoeren");
+                Console.WriteLine("4. DemoStudyProgram Uitvoerenl");
                 Console.Write("\nMaak een keuze : ");
                 string choice = Console.ReadLine();
 
@@ -35,6 +35,9 @@ namespace SchoolAdmin
                     case "3":
                         ReadTextFormatStudent();
                         break;
+                    case "4":
+                        StudyProgram.DemoStudyProgram();
+                        break;
 
                     case "stop":
                         running = false;
@@ -48,9 +51,9 @@ namespace SchoolAdmin
 
             }
 
-
+           
         }
-       
+
 
         public static void DemoCourses()
         {
@@ -88,13 +91,11 @@ namespace SchoolAdmin
             said.RegisterCourseResult(programmeren, 15);
             said.RegisterCourseResult(webtechnologie, 13);
 
-            
+
             mieke.RegisterCourseResult(communicatie, 13);
             mieke.RegisterCourseResult(programmeren, 16);
             mieke.RegisterCourseResult(databanken, 14);
-
             
-
 
         }
 
@@ -190,10 +191,8 @@ namespace SchoolAdmin
             newStundent.ShowOverview();
 
 
-        }
-
-
-
+        }        
 
     }
+
 }

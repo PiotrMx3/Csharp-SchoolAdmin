@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace SchoolAdmin
         public uint StudentNumber;
         private List<CourseRegistration> coursesRegistrations = new();
         public static uint StudentCounter = 1;
+        private static ImmutableList<Student> allStudents = ImmutableList<Student>.Empty;
 
 
         public Student (string name, DateTime birthDate)
@@ -22,8 +24,18 @@ namespace SchoolAdmin
             this.BirthDate = birthDate;
             this.StudentNumber = StudentCounter;
             StudentCounter++;
+
+            allStudents = allStudents.Add(this);
         }
 
+
+        public static ImmutableList<Student> Students
+        {
+            get
+            {
+                return allStudents;
+            }
+        }
 
         public int Age
         {

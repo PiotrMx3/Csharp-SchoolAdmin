@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,23 +15,8 @@ namespace SchoolAdmin
         private static int maxId = 1;
         private byte creditPoints;
 
-        public static List<Course> AllCourses = new();
+        private static ImmutableList<Course> allCourses = ImmutableList<Course>.Empty;
 
-
-        public static Course? SearchCourseById(int searchId)
-        {
-
-
-            for (int i = 0; i < AllCourses.Count; i++)
-            {
-                if (AllCourses[i].Id == searchId)
-                {
-                    return AllCourses[i];
-                } 
-            }
-
-            return null;
-        }
 
 
         public Course(string title, List<Student> students, byte creditPoints)
@@ -39,8 +25,8 @@ namespace SchoolAdmin
             this.Students = students;
             CreditPoints = creditPoints;
             this.id = maxId;
+            allCourses = allCourses.Add(this);
 
-            AllCourses.Add(this);
             maxId++;
 
         }
@@ -51,9 +37,33 @@ namespace SchoolAdmin
         }
 
 
+        public static ImmutableList<Course> AllCourses
+        {
+            get
+            {
+                return allCourses;
+            }
+        }
+
+
         public Course(string title) : this(title, new List<Student>(), 3)
         {
 
+        }
+
+        public static Course? SearchCourseById(int searchId)
+        {
+
+
+            for (int i = 0; i < allCourses.Count; i++)
+            {
+                if (allCourses[i].Id == searchId)
+                {
+                    return allCourses[i];
+                }
+            }
+
+            return null;
         }
 
 
@@ -118,6 +128,9 @@ namespace SchoolAdmin
                 Console.WriteLine($"");
 
         }
+        
     }
+
+
 
 }

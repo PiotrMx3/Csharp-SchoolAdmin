@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace SchoolAdmin
     internal class StudyProgram
     {
         private string name;
-        public List<Course> Courses;
+        private ImmutableList<Course> courses = ImmutableList<Course>.Empty;
 
         public StudyProgram(string nameProgram)
         {
@@ -23,6 +24,19 @@ namespace SchoolAdmin
             }
         }
 
+        public  ImmutableList<Course> Courses
+        {
+            get
+            {
+                return this.courses;
+            }
+        }
+
+        public void AddCourses(List<Course> NewCourses)
+        {
+            this.courses = this.courses.AddRange(NewCourses);
+        }
+
         public static void DemoStudyProgram()
         {
             Course communicatie = new Course("Communicatie");
@@ -34,12 +48,8 @@ namespace SchoolAdmin
             StudyProgram programmerenProgram = new StudyProgram("Programmeren");
             StudyProgram snbProgram = new StudyProgram("Systeem- en netwerkbeheer");
 
-            programmerenProgram.Courses = Course.coursesCopy(courses);
-            snbProgram.Courses = Course.coursesCopy(courses);
-
-            snbProgram.Courses.Remove(databanken);
-
-            snbProgram.Courses[1].Title = "Scripting";
+            programmerenProgram.AddCourses(courses);
+            snbProgram.AddCourses(courses);
 
 
             programmerenProgram.ShowOverview();
