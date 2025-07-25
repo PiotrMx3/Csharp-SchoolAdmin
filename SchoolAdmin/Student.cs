@@ -7,68 +7,42 @@ using System.Threading.Tasks;
 
 namespace SchoolAdmin
 {
-    internal class Student
+    internal class Student : Person
     {
 
-        public string Name;
-        public DateTime BirthDate;
-        public uint StudentNumber;
         private List<CourseRegistration> coursesRegistrations = new();
-        public static uint StudentCounter = 1;
-        private static ImmutableList<Student> allStudents = ImmutableList<Student>.Empty;
+        private static ImmutableList<Student> _allStudents = ImmutableList<Student>.Empty;
+        private ImmutableDictionary<DateTime, string> _studentFile = ImmutableDictionary<DateTime, string>.Empty;
 
-
-        public Student (string name, DateTime birthDate)
+        public Student(string name, DateTime birthDate) 
+            : base(name, birthDate)
         {
-            this.Name = name;
-            this.BirthDate = birthDate;
-            this.StudentNumber = StudentCounter;
-            StudentCounter++;
 
-            allStudents = allStudents.Add(this);
+            _allStudents = _allStudents.Add(this);
         }
 
 
         public static ImmutableList<Student> Students
         {
-            get
-            {
-                return allStudents;
-            }
+            get { return _allStudents; }
         }
 
-        public int Age
+        public ImmutableDictionary<DateTime, string> StudentFile
         {
-            get
-            {
-                DateTime now = DateTime.Now;
-
-
-                int years = now.Year - this.BirthDate.Year;
-
-                if(this.BirthDate.Month > now.Month)
-                {
-                    years--;
-                }
-                else if (this.BirthDate.Month == now.Month) {
-                    
-                    if(this.BirthDate.Day > now.Day)
-                    {
-                        years--;
-                    }
-
-                }
-
-                    return years;
-            }
+            get { return this._studentFile; }
         }
 
-        public string GenerateNameCard()
+        public void AddRemark(string comment)
+        {
+            _studentFile = this._studentFile.Add(DateTime.Now, comment);
+        }
+
+        public override string GenerateNameCard()
         {
             return $"{this.Name} (STUDENT)";
         }
 
-        public double DetermineWorkload()
+        public override double DetermineWorkload()
         {
             return this.coursesRegistrations.Count * 10.00;
         }
