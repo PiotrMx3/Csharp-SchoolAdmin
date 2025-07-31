@@ -10,14 +10,15 @@ namespace SchoolAdmin
     internal abstract class Employee : Person
     {
         private DateTime _hireDate;
-        private ImmutableDictionary<string, byte> _tasks = ImmutableDictionary<string, byte>.Empty;
+        private protected ImmutableDictionary<string, byte> _tasks = ImmutableDictionary<string, byte>.Empty;
         private static ImmutableList<Employee> _allEmployees = ImmutableList<Employee>.Empty;
 
         public Employee(string name, DateTime birthDate, ImmutableDictionary<string, byte> tasks) : base(name, birthDate)
         {
-            _tasks = _tasks.AddRange(tasks);
+            this._tasks = _tasks.AddRange(tasks);
+            this._hireDate = DateTime.Now;
+
             _allEmployees = _allEmployees.Add(this);
-            _hireDate = DateTime.Now;
         }
 
 
@@ -25,9 +26,9 @@ namespace SchoolAdmin
         {
             get 
             {
-                int years = DateTime.Now.Year - _hireDate.Year;
+                int years = DateTime.Now.Year - this._hireDate.Year;
 
-                if(_hireDate > DateTime.Now.AddYears(-years))
+                if(this._hireDate > DateTime.Now.AddYears(-years))
                 {
                     years--;
                 }

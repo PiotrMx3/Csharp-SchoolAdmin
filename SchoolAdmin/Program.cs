@@ -1,5 +1,6 @@
 ﻿
 
+using System.Collections.Immutable;
 using System.Data;
 
 namespace SchoolAdmin
@@ -19,7 +20,11 @@ namespace SchoolAdmin
                 Console.WriteLine("1. DemonstreerStudenten Uitvoeren");
                 Console.WriteLine("2. DemonstreerCurssusen Uitvoeren");
                 Console.WriteLine("3. ReadTextFormatStudent Uitvoeren");
-                Console.WriteLine("4. DemoStudyProgram Uitvoerenl");
+                Console.WriteLine("4. DemoStudyProgram Uitvoeren");
+                Console.WriteLine("5. DemoAdministrativePersonnel Uitvoeren");
+                Console.WriteLine("6. DemoLector Uitvoeren");
+
+
                 Console.Write("\nMaak een keuze : ");
                 string choice = Console.ReadLine();
 
@@ -37,6 +42,12 @@ namespace SchoolAdmin
                         break;
                     case "4":
                         StudyProgram.DemoStudyProgram();
+                        break;
+                    case "5":
+                        DemoAdministrativeStaff();
+                        break;
+                    case "6":
+                        DemoLecturers();
                         break;
 
                     case "stop":
@@ -191,7 +202,75 @@ namespace SchoolAdmin
             newStundent.ShowOverview();
 
 
-        }        
+        }
+
+        public static void DemoAdministrativeStaff()
+        {
+
+            var temp = new Dictionary<string, byte>
+            {
+                ["Roostering"] = 10,
+                ["Correspondentie"] = 10,
+                ["Animatie"] = 10
+            };
+
+            ImmutableDictionary<string, byte> userTasks = temp.ToImmutableDictionary();
+
+            AdministrativeStaff ahmed = new AdministrativeStaff("Ahmed", new DateTime(1988, 02, 04), userTasks);
+
+
+
+            foreach (var adminuser in AdministrativeStaff.AllAdminStaff)
+            {
+                Console.WriteLine($"{adminuser.GenerateNameCard()}\n" +
+                    $"{adminuser.CalculateSalary()}\n" +
+                    $"{adminuser.DetermineWorkload()}");
+            }
+
+
+        }
+
+
+        public static void DemoLecturers()
+        {
+            Course economie = new Course("Economie");
+            Course statics = new Course("Statistiek");
+            Course analiticsMath = new Course("Amalystische Meetkunde");
+
+
+            var temp = new Dictionary<Course, double> 
+            {
+                [economie] = 3,
+                [statics] = 3,
+                [analiticsMath] = 4 
+            };
+
+            Lector anna = new Lector("Anna Bolazno", new DateTime(1975, 06, 12), ImmutableDictionary<string, byte>.Empty, temp );
+
+            Console.WriteLine();
+            Console.WriteLine($"{anna.GenerateNameCard()}");
+            foreach (var item in anna.Courses.Keys)
+            {
+                Console.WriteLine($"{item.Title}");
+            }
+            Console.WriteLine();
+
+            Console.WriteLine($"{anna.DetermineWorkload()}");
+            Console.WriteLine($"{anna.CalculateSalary()}");
+
+
+            Console.WriteLine();
+
+
+            Console.WriteLine("Alle Lectoren :");
+            foreach (var item in Lector.AllLecotren)
+            {
+                Console.WriteLine($"{item.Name}");
+            }
+
+
+
+        }
 
     }
 

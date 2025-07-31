@@ -73,7 +73,7 @@ namespace SchoolAdmin
             get { return this._birthDate; }
         }
 
-        public ImmutableList<Person> AllPersons
+        public static ImmutableList<Person> AllPersons
         {
             get { return _allPersons; }
         }
