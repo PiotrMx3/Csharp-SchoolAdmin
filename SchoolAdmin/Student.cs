@@ -9,28 +9,68 @@ namespace SchoolAdmin
 {
     internal class Student : Person
     {
-
-        private List<CourseRegistration> coursesRegistrations = new();
-        private static ImmutableList<Student> _allStudents = ImmutableList<Student>.Empty;
         private ImmutableDictionary<DateTime, string> _studentFile = ImmutableDictionary<DateTime, string>.Empty;
 
         public Student(string name, DateTime birthDate) 
             : base(name, birthDate)
         {
 
-            _allStudents = _allStudents.Add(this);
         }
 
-
-        public static ImmutableList<Student> Students
+        public ImmutableList<Course> Courses
         {
-            get { return _allStudents; }
+            get
+            {
+                var builder = ImmutableList.CreateBuilder<Course>();
+
+                foreach (var reg in CourseRegistrations)
+                {
+                    builder.Add(reg.Course);
+                }
+
+                return builder.ToImmutable();
+            }
         }
+
+
+        public ImmutableList<CourseRegistration> CourseRegistrations
+        {
+            get
+            {
+                var builder = ImmutableList.CreateBuilder<CourseRegistration>();
+
+                foreach (var reg in CourseRegistration.AllCourseRegistrations)
+                {
+
+                   if (reg.Student.Id == this.Id) builder.Add(reg);
+
+                }
+
+                return builder.ToImmutable();
+            }
+        } 
+
+            public static ImmutableList<Student> AllStudents
+            {
+                get 
+                {
+                   
+                    List < Student > temp = new();
+
+                    foreach (var item in AllPersons)
+                    {
+                        if (item is Student s) temp.Add(s);
+                    }
+
+                    return temp.ToImmutableList();
+                }
+            }
 
         public ImmutableDictionary<DateTime, string> StudentFile
         {
             get { return this._studentFile; }
         }
+
 
 
         public override string ToString()
@@ -52,7 +92,7 @@ namespace SchoolAdmin
 
         public override double DetermineWorkload()
         {
-            return this.coursesRegistrations.Count * 10.00;
+            return this.CourseRegistrations.Count * 10.00;
         }
 
 
@@ -64,9 +104,7 @@ namespace SchoolAdmin
                 return;
             }
 
-            CourseRegistration newResult = new CourseRegistration(course, result);
-
-            coursesRegistrations.Add(newResult);
+            CourseRegistration newResult = new CourseRegistration(course, result,this);
 
         }
 
@@ -77,7 +115,7 @@ namespace SchoolAdmin
             double total = 0;
             int counter = 0;
 
-            foreach (var course in this.coursesRegistrations)
+            foreach (var course in this.CourseRegistrations)
             {
                 if (course.Result is not null)
                 {
@@ -97,7 +135,7 @@ namespace SchoolAdmin
             Console.WriteLine("Cijferrapport");
             Console.WriteLine("*************");
 
-            foreach (var item in this.coursesRegistrations)
+            foreach (var item in this.CourseRegistrations)
             {
 
                 Console.WriteLine($"{item.Course.Title + ":",-20} {item.Result}");

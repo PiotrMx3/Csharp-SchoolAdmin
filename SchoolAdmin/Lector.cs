@@ -9,12 +9,10 @@ namespace SchoolAdmin
 {
     internal class Lector : Employee
     {
-        private static ImmutableList<Lector> _allLectoren = ImmutableList<Lector>.Empty;
         private Dictionary<Course, double> _courses;
 
         public Lector(string name, DateTime birthDate, ImmutableDictionary<string, byte> tasks, Dictionary<Course, double> courses) : base(name, birthDate, tasks)
         {
-            _allLectoren = _allLectoren.Add(this);
             this._courses = courses ?? new Dictionary<Course, double>();
         }
 
@@ -53,7 +51,17 @@ namespace SchoolAdmin
 
         public static ImmutableList<Lector> AllLecotren
         {
-            get { return _allLectoren; }
+            get 
+            {
+                List<Lector> allLectoren = new();
+
+                foreach (var item in AllEmployees)
+                {
+                    if (item is Lector l) allLectoren.Add(l);
+                }
+
+                return allLectoren.ToImmutableList(); 
+            }
         }
 
         public Dictionary<Course, double> Courses

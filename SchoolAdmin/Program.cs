@@ -18,7 +18,7 @@ namespace SchoolAdmin
             {
                 Console.WriteLine("Wat wil jij doen ?\n");
                 Console.WriteLine("1. DemonstreerStudenten Uitvoeren");
-                Console.WriteLine("2. DemonstreerCurssusen Uitvoeren");
+                Console.WriteLine("2. DemonstreerCursusen Uitvoeren");
                 Console.WriteLine("3. ReadTextFormatStudent Uitvoeren");
                 Console.WriteLine("4. DemoStudyProgram Uitvoeren");
                 Console.WriteLine("5. DemoAdministrativePersonnel Uitvoeren");
@@ -49,7 +49,10 @@ namespace SchoolAdmin
                     case "6":
                         DemoLecturers();
                         break;
+                    case "7":
 
+                        break;
+                        
                     case "stop":
                         running = false;
                          break;
@@ -72,31 +75,13 @@ namespace SchoolAdmin
             Student mieke = new("Mike Vermeulen", new DateTime(1998, 1, 1));
 
 
-            List<Student> students = new() { said, mieke };
 
-
-
-            Course communicatie = new("Communicatie", students, 6);
-
-            communicatie.ShowOverview();
-
-
-            Course programmeren = new("Programmeren", students);
-
-            programmeren.ShowOverview();
-
-
+            Course communicatie = new("Communicatie",6);
+            Course programmeren = new("Programmeren");
             Course webtechnologie = new("Webtechnologie");
-            webtechnologie.Students.Add(said);
-
-
-            webtechnologie.ShowOverview();
-
-
             Course databanken = new("Databanken");
-            databanken.Students.Add(mieke);
 
-            databanken.ShowOverview();
+
 
             said.RegisterCourseResult(communicatie, 12);
             said.RegisterCourseResult(programmeren, 15);
@@ -106,8 +91,12 @@ namespace SchoolAdmin
             mieke.RegisterCourseResult(communicatie, 13);
             mieke.RegisterCourseResult(programmeren, 16);
             mieke.RegisterCourseResult(databanken, 14);
-            
 
+
+            communicatie.ShowOverview();
+            programmeren.ShowOverview();
+            webtechnologie.ShowOverview();
+            databanken.ShowOverview();
         }
 
 
@@ -118,18 +107,13 @@ namespace SchoolAdmin
             Student said = new("Said Aziz", new DateTime(2000, 12, 23));
             Student mieke = new("Mike Vermeulen", new DateTime(1998, 1, 1));
 
-            List<Student> students = new() { said, mieke };
 
 
-            Course communicatie = new("Communicatie", students, 6);
-
-            Course programmeren = new("Programmeren", students);
-
+            Course communicatie = new("Communicatie", 6);
+            Course programmeren = new("Programmeren");
             Course webtechnologie = new("Webtechnologie");
-            webtechnologie.Students.Add(said);
-
             Course databanken = new("Databanken");
-            databanken.Students.Add(mieke);
+
 
 
 
@@ -155,14 +139,16 @@ namespace SchoolAdmin
             string csv = Console.ReadLine();
 
             string[] readCsv = csv.Split(";");
-            string[] spelerInfo = new string[4];
+
+            string[] newUser = new string[4];
+
             List<string> courseInfo = new List<string>();
 
             for (int i = 0; i < readCsv.Length; i++)
             {
                 if (i <= 3)
                 {
-                    spelerInfo[i] = readCsv[i]; 
+                    newUser[i] = readCsv[i]; 
                 }
                 else
                 {
@@ -229,7 +215,7 @@ namespace SchoolAdmin
             }
 
 
-            Console.WriteLine($"{ahmed}");
+
         }
 
 

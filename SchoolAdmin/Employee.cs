@@ -11,14 +11,12 @@ namespace SchoolAdmin
     {
         private DateTime _hireDate;
         private protected ImmutableDictionary<string, byte> _tasks = ImmutableDictionary<string, byte>.Empty;
-        private static ImmutableList<Employee> _allEmployees = ImmutableList<Employee>.Empty;
+
 
         public Employee(string name, DateTime birthDate, ImmutableDictionary<string, byte> tasks) : base(name, birthDate)
         {
             this._tasks = _tasks.AddRange(tasks);
             this._hireDate = DateTime.Now;
-
-            _allEmployees = _allEmployees.Add(this);
         }
 
 
@@ -44,7 +42,17 @@ namespace SchoolAdmin
         
         public static ImmutableList<Employee> AllEmployees
         {
-            get { return _allEmployees; }
+            get 
+            {
+                List<Employee> employees = new();
+
+                foreach (var item in AllPersons)
+                {
+                    if (item is Employee e) employees.Add(e);
+                }
+
+                return employees.ToImmutableList();
+            }
         }
 
         public abstract uint CalculateSalary();

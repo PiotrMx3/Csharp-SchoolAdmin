@@ -10,19 +10,18 @@ namespace SchoolAdmin
     internal class Course
     {
         public string Title;
-        public List<Student> Students;
         private int id;
         private static int maxId = 1;
         private byte creditPoints;
+            
 
         private static ImmutableList<Course> allCourses = ImmutableList<Course>.Empty;
 
 
 
-        public Course(string title, List<Student> students, byte creditPoints)
+        public Course(string title, byte creditPoints)
         {
             this.Title = title;
-            this.Students = students;
             CreditPoints = creditPoints;
             this.id = maxId;
             allCourses = allCourses.Add(this);
@@ -31,11 +30,42 @@ namespace SchoolAdmin
 
         }
 
-        public Course(string title, List<Student> students) : this(title, students, 3)
+        public Course(string title) : this(title, 3)
         {
 
         }
 
+
+        public  ImmutableList<Student> Students
+        {
+            get
+            {
+                var temp = ImmutableList.CreateBuilder<Student>();
+
+                foreach (var reg in CourseRegistrations)
+                {
+                    temp.Add(reg.Student);
+                }
+
+                return temp.ToImmutable();
+               
+            }
+        }
+
+        public ImmutableList<CourseRegistration> CourseRegistrations
+        {
+           get
+            {
+                var temp = ImmutableList.CreateBuilder<CourseRegistration>();
+
+                foreach (var reg in CourseRegistration.AllCourseRegistrations)
+                {
+                    if (reg.Course.Id == this.Id) temp.Add(reg);
+                }
+
+                return temp.ToImmutable();
+            }
+        }
 
         public static ImmutableList<Course> AllCourses
         {
@@ -43,12 +73,6 @@ namespace SchoolAdmin
             {
                 return allCourses;
             }
-        }
-
-
-        public Course(string title) : this(title, new List<Student>(), 3)
-        {
-
         }
 
         public static Course? SearchCourseById(int searchId)
@@ -93,7 +117,6 @@ namespace SchoolAdmin
         public Course Clone()
         {
             Course copy = new Course(this.Title);
-            copy.Students = this.Students;
             copy.id = this.Id;
             copy.creditPoints = this.CreditPoints;
 
@@ -130,7 +153,7 @@ namespace SchoolAdmin
         {
             Console.WriteLine($"{this.Title} ({Id}) ({CreditPoints}stp)");
 
-            foreach (var student in this.Students) 
+            foreach (var student in Students) 
             {
                 Console.WriteLine($"{student.Name}");
             }
