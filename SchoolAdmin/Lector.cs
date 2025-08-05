@@ -27,6 +27,12 @@ namespace SchoolAdmin
             return (uint)basisSalary;
         }
 
+        public override string ToString()
+        {
+            return
+                    base.ToString() + "\n" + "Lector";
+        }
+
         public override double DetermineWorkload()
         {
             double workLoad = 0.00;

@@ -66,7 +66,17 @@ namespace SchoolAdmin
             return null;
         }
 
+        public override bool Equals(object? obj)
+        {
+            if (obj is not Course other) return false;
 
+            return this.Id == other.Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Id.GetHashCode();
+        }
 
         public static List<Course> coursesCopy(List<Course> coursesList)
         {

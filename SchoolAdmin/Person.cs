@@ -27,6 +27,27 @@ namespace SchoolAdmin
         }
 
 
+        public override string ToString()
+        {
+            return
+                $"Persoon\n" +
+                $"-------\n" +
+                $"Naam: {this.Name}\n" +
+                $"Leeftijd: {this.Age}"; 
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is not Person other) return false;
+
+            return this._id == other._id;
+        }
+
+        public override int GetHashCode()
+        {
+            return this._id.GetHashCode();
+        }
+
         public abstract string GenerateNameCard();
         public abstract double DetermineWorkload();
 

@@ -16,6 +16,12 @@ namespace SchoolAdmin
         {
             _allAdminStaff = _allAdminStaff.Add(this);
         }
+
+        public override string ToString()
+        {
+            return
+                    base.ToString() + "\n" + "Administratief personeel";
+        }
         public override uint CalculateSalary()
         {
             double basisSalary = 2000.00 + (Math.Floor(Seniority / 3.00) * 75.00);

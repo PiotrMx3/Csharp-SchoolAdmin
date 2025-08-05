@@ -32,6 +32,14 @@ namespace SchoolAdmin
             get { return this._studentFile; }
         }
 
+
+        public override string ToString()
+        {
+            return
+                    base.ToString() + "\n" + "Student" ;
+        }
+
+
         public void AddRemark(string comment)
         {
             _studentFile = this._studentFile.Add(DateTime.Now, comment);

@@ -220,6 +220,7 @@ namespace SchoolAdmin
 
 
 
+
             foreach (var adminuser in AdministrativeStaff.AllAdminStaff)
             {
                 Console.WriteLine($"{adminuser.GenerateNameCard()}\n" +
@@ -228,6 +229,7 @@ namespace SchoolAdmin
             }
 
 
+            Console.WriteLine($"{ahmed}");
         }
 
 
