@@ -11,10 +11,10 @@ namespace SchoolAdmin
     {
         private Course _course;
         private byte? _result;
+        private readonly Student _student; 
 
         public static ImmutableList<CourseRegistration> AllCourseRegistrations = ImmutableList<CourseRegistration>.Empty;
 
-        private readonly Student _student; 
 
 
         public CourseRegistration(Course course, byte? result, Student student)

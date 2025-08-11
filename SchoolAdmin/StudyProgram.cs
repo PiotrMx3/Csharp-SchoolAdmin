@@ -63,34 +63,6 @@ namespace SchoolAdmin
 
         }
 
-        public static void DemoStudyProgram()
-        {
-            Course communicatie = new Course("Communicatie");
-            Course programmeren = new Course("Programmeren");
-            Course databanken = new Course("Databanken");
-
-
-            StudyProgram programmerenProgram = new StudyProgram("Programmeren");
-            StudyProgram snbProgram = new StudyProgram("Systeem- en netwerkbeheer");
-
-
-            programmerenProgram.AddCourses(communicatie, 1);
-            programmerenProgram.AddCourses(programmeren, 1);
-            programmerenProgram.AddCourses(databanken, 1);
-
-
-            snbProgram.AddCourses(communicatie, 2);
-            snbProgram.AddCourses(programmeren, 1);
-            snbProgram.AddCourses(databanken, 1);
-
-            snbProgram.SetAlias(communicatie, "scripting");
-
-
-
-            programmerenProgram.ShowOverview();
-            snbProgram.ShowOverview();
-
-        }
 
         public void ShowOverview()
         {
