@@ -50,7 +50,7 @@ namespace SchoolAdmin
                         DemoLecturers();
                         break;
                     case "7":
-
+                        
                         break;
                         
                     case "stop":

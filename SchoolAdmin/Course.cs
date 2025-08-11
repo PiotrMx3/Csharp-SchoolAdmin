@@ -9,10 +9,10 @@ namespace SchoolAdmin
 {
     internal class Course
     {
-        public string Title;
+        public string Title { get; set; }
         private int id;
         private static int maxId = 1;
-        private byte creditPoints;
+        private byte _creditPoints;
             
 
         private static ImmutableList<Course> allCourses = ImmutableList<Course>.Empty;
@@ -102,25 +102,24 @@ namespace SchoolAdmin
             return this.Id.GetHashCode();
         }
 
-        public static List<Course> coursesCopy(List<Course> coursesList)
+        //public static List<Course> coursesCopy(List<Course> coursesList)
+        //{
+        //    List<Course> copy = new();
+
+        //    for (int i = 0; i < coursesList.Count; i++)
+        //    {
+        //        Course copyCourse = coursesList[i].Clone();
+        //        copy.Add(copyCourse);
+        //    }
+
+        //    return copy;
+        //}
+        public Course Rename(string newName)
         {
-            List<Course> copy = new();
+            Course newCourseName = new Course(newName);
+            newCourseName._creditPoints = this.CreditPoints;
 
-            for (int i = 0; i < coursesList.Count; i++)
-            {
-                Course copyCourse = coursesList[i].Clone();
-                copy.Add(copyCourse);
-            }
-
-            return copy;
-        }
-        public Course Clone()
-        {
-            Course copy = new Course(this.Title);
-            copy.id = this.Id;
-            copy.creditPoints = this.CreditPoints;
-
-            return copy;
+            return newCourseName;
         }
 
 
@@ -129,11 +128,11 @@ namespace SchoolAdmin
         {
             get
             {
-                return this.creditPoints;
+                return this._creditPoints;
             }
             private set
             {
-                this.creditPoints = value;
+                this._creditPoints = value;
             }
         }
 

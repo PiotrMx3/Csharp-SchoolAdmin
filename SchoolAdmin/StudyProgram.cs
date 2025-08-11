@@ -10,7 +10,15 @@ namespace SchoolAdmin
     internal class StudyProgram
     {
         private string name;
-        private ImmutableList<Course> courses = ImmutableList<Course>.Empty;
+        private ImmutableDictionary<Course, byte> _studyCourses = ImmutableDictionary<Course,byte>.Empty;
+        private Dictionary<Course, string> _studyAlias = new();
+
+
+        public ImmutableDictionary<Course, byte> StudyCourses 
+        {
+            get { return this._studyCourses; }
+        }
+
 
         public StudyProgram(string nameProgram)
         {
@@ -24,17 +32,35 @@ namespace SchoolAdmin
             }
         }
 
-        public  ImmutableList<Course> Courses
+        public string ReadAlias(Course c)
         {
-            get
-            {
-                return this.courses;
-            }
+            return _studyAlias.TryGetValue(c, out var alias) ? alias : c.Title;
+        }
+        public void SetAlias(Course c, string alias)
+        {
+            _studyAlias[c] = alias;
         }
 
-        public void AddCourses(List<Course> NewCourses)
+        public void AddCourses(Course course, byte semester )
         {
-            this.courses = this.courses.AddRange(NewCourses);
+
+            if (course is null) return;
+
+            if (_studyCourses.ContainsKey(course))
+            {
+                Console.WriteLine("Deze curssus bestaat al...");
+                return;
+            }
+
+            if (semester != 1 && semester != 2)
+            {
+                Console.WriteLine("Toegelaten wardes 1 of 2");
+                return;
+            }
+
+            _studyCourses = _studyCourses.Add(course, semester);
+
+
         }
 
         public static void DemoStudyProgram()
@@ -43,27 +69,69 @@ namespace SchoolAdmin
             Course programmeren = new Course("Programmeren");
             Course databanken = new Course("Databanken");
 
-            List<Course> courses = new List<Course>() { communicatie, programmeren, databanken };
 
             StudyProgram programmerenProgram = new StudyProgram("Programmeren");
             StudyProgram snbProgram = new StudyProgram("Systeem- en netwerkbeheer");
 
-            programmerenProgram.AddCourses(courses);
-            snbProgram.AddCourses(courses);
+
+            programmerenProgram.AddCourses(communicatie, 1);
+            programmerenProgram.AddCourses(programmeren, 1);
+            programmerenProgram.AddCourses(databanken, 1);
+
+
+            snbProgram.AddCourses(communicatie, 2);
+            snbProgram.AddCourses(programmeren, 1);
+            snbProgram.AddCourses(databanken, 1);
+
+            snbProgram.SetAlias(communicatie, "scripting");
+
 
 
             programmerenProgram.ShowOverview();
             snbProgram.ShowOverview();
+
         }
 
         public void ShowOverview()
         {
-            Console.WriteLine($"{Name}");
+            List<Course> semester1 = new();
+            List<Course> semester2 = new();
+
+
+            foreach (var course in _studyCourses )
+            {
+                if (course.Value == 1) semester1.Add(course.Key);
+                if (course.Value == 2) semester2.Add(course.Key);
+
+            }
+
+            Console.WriteLine($"Programma: {Name}");
                 Console.WriteLine("");
 
-            foreach (Course item in Courses)
+            int counter = 1;
+
+            Console.WriteLine("Semester 1 ");
+            Console.WriteLine("");
+            if(semester1.Count == 0)  Console.WriteLine("Geen cursussen");
+
+
+            foreach (var item in semester1)
             {
-                Console.WriteLine(item.Title);
+                Console.WriteLine($"{this.ReadAlias(item)} ({counter}) ({item.CreditPoints}stp)");
+                counter++;
+            }
+                Console.WriteLine("");
+
+            counter = 1;
+
+            Console.WriteLine("Semester 2 ");
+            Console.WriteLine("");
+            if (semester2.Count == 0) Console.WriteLine("Geen curssusen");
+
+            foreach (var item in semester2)
+            {
+                Console.WriteLine($"{this.ReadAlias(item)} ({counter}) ({item.CreditPoints}stp)");
+                counter++;
             }
                 Console.WriteLine("");
         }
