@@ -21,11 +21,20 @@ namespace SchoolAdmin
 
         public Course(string title, byte creditPoints)
         {
+
+            Course? rnd = SearchCourseById(1);
+
             this.Title = title;
-            CreditPoints = creditPoints;
+            _creditPoints = creditPoints;
+
+
+            if(rnd is not null)
+            {
+                if (this.Title == rnd.Title) throw new DuplicateDataException("Nieuwe cursus heeft dezelfde naam als een bestaande cursus", this, rnd);
+            }
+
             this.id = maxId;
             allCourses = allCourses.Add(this);
-
             maxId++;
 
         }

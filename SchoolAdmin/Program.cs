@@ -187,9 +187,20 @@ namespace SchoolAdmin
             Console.WriteLine("Aantal studiepunten ?");
             byte creditPoints = Convert.ToByte(Console.ReadLine());
 
-            Course newCourse = new(title, creditPoints);
+            try
+            {
+                Course newCourse = new(title, creditPoints);
+                Console.WriteLine($"Cursus met ID {newCourse.Id} is aangemaakt");
 
-            Console.WriteLine($"Cursus met ID {newCourse.Id} is aangemaakt");
+            }
+            catch (DuplicateDataException e)
+            {
+                var objecId = (Course)e.Object2;
+                Console.WriteLine(e.Message);
+                Console.WriteLine($"Id van de reeds bestaande curus is: {objecId.Id}");
+            }
+
+
         }
 
 
