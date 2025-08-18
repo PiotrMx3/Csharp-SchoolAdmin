@@ -20,6 +20,25 @@ namespace SchoolAdmin
         public CourseRegistration(Course course, byte? result, Student student)
 
         {
+            for (int i = 0; i < AllCourseRegistrations.Count; i++)
+            {
+                if (AllCourseRegistrations[i].Student.Equals(student) &&
+                    AllCourseRegistrations[i].Course.Equals(course))
+                { 
+                    throw new ArgumentException("Een student kan niet meermaals inschrijven voor dezelefde cursus.");
+                }
+            }
+
+            int counter = 0;
+
+            for (int i = 0; i < AllCourseRegistrations.Count; i++)
+            {
+                if (AllCourseRegistrations[i].Course.Equals(course)) counter++;
+            }
+
+            if (counter >= 1) throw new InvalidOperationException($"Er zijn al teveel studenten ingeschreven voor {course.Title}");
+
+
             Course = course;
             Result = result;
             Student = student;

@@ -200,17 +200,19 @@ namespace SchoolAdmin
                 }
 
             }
+
+            catch (InvalidOperationException e)
+            {
+                Console.WriteLine(e.Message);
+            }
             catch (ArgumentException e)
             {
                 Console.WriteLine(e.Message);
-                
             }
             catch (Exception)
             {
                 Console.WriteLine("Er ging iets miss");
-
             }
-
 
         } 
 
