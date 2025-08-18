@@ -9,28 +9,36 @@ namespace SchoolAdmin
 {
     internal class CourseRegistration
     {
-        private Course _course;
+        private  Course _course;
         private byte? _result;
-        private readonly Student _student; 
+        private  Student _student; 
 
         public static ImmutableList<CourseRegistration> AllCourseRegistrations = ImmutableList<CourseRegistration>.Empty;
 
 
 
         public CourseRegistration(Course course, byte? result, Student student)
+
         {
-            _course = course;
-            _result = result;
-            _student = student;
+            Course = course;
+            Result = result;
+            Student = student;
 
             AllCourseRegistrations = AllCourseRegistrations.Add(this);
         }
+
+
 
         public Student Student
         {
             get
             {
                 return this._student;
+            }
+            private set
+            {
+                if (value is null) throw new ArgumentException("Student/cursus mag niet ontbreken.");
+                this._student = value;
             }
         }
 
@@ -42,6 +50,7 @@ namespace SchoolAdmin
             }
             private set
             {
+                 if (value is null) throw new ArgumentException("Student/cursus mag niet ontbreken.");
                 _course = value;
             }
         }
@@ -54,13 +63,13 @@ namespace SchoolAdmin
             }
             set
             {
-                if (value is not null and <= 20)
+                if (value is null || value <= 20 && value >= 0)
                 {
                     this._result = value;
                 }
                 else
                 {
-                    Console.WriteLine("Resultaat moet tussen 0 en 20 liggen.");
+                    throw new ArgumentOutOfRangeException("Resultaat moet tussen 0 en 20 liggen.");
                 }
             }
         }

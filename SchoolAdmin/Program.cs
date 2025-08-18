@@ -119,7 +119,11 @@ namespace SchoolAdmin
         public static void NewCourseRegistration()
         {
             var students = Student.AllStudents;
+            students = students.Insert(0, null);
+
             var courses = Course.AllCourses;
+            courses = courses.Insert(0, null);
+
 
             if (students.Count <= 0 || courses.Count <= 0)
             {
@@ -132,7 +136,15 @@ namespace SchoolAdmin
 
             for (int i = 0; i < students.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. {students[i].Name}");
+                if (students[i] is null)
+                {
+                    Console.WriteLine("1. null");
+                }
+                else
+                {
+
+                    Console.WriteLine($"{i + 1}. {students[i].Name}");
+                }
             }
 
             int studentChoice = Convert.ToInt32(Console.ReadLine());
@@ -143,7 +155,16 @@ namespace SchoolAdmin
 
             for (int i = 0; i < courses.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. {courses[i].Title}");
+                if (courses[i] is null)
+                {
+                    Console.WriteLine("1. null");
+
+                }
+                else 
+                {
+                    
+                    Console.WriteLine($"{i + 1}. {courses[i].Title}");
+                }
             }
 
 
@@ -154,26 +175,41 @@ namespace SchoolAdmin
 
             string answer = Console.ReadLine();
 
-            if(answer.ToLower() == "ja")
+
+            try
             {
+                if(answer.ToLower() == "ja")
+                {
 
-                Console.WriteLine("Wat is het resultaat (0-20) ? ");
+                    Console.WriteLine("Wat is het resultaat (0-20) ? ");
 
-                byte result = Convert.ToByte(Console.ReadLine());
-                CourseRegistration newReg = new(courses[courseChoice - 1], result, students[studentChoice - 1]);
+                    byte result = Convert.ToByte(Console.ReadLine());
+                    CourseRegistration newReg = new(courses[courseChoice - 1], result, students[studentChoice - 1]);
+
+                }
+                else if (answer.ToLower() == "nee")
+                {
+                    CourseRegistration newReg = new(courses[courseChoice - 1], null, students[studentChoice - 1]);
+
+
+                }
+                else
+                {
+                    Console.WriteLine("Er ging iets mis probeer opnieuw ");
+                    return;
+                }
 
             }
-            else if (answer.ToLower() == "nee")
+            catch (ArgumentException e)
             {
-                CourseRegistration newReg = new(courses[courseChoice - 1], null, students[studentChoice - 1]);
+                Console.WriteLine(e.Message);
+                
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Er ging iets miss");
 
             }
-            else
-            {
-                Console.WriteLine("Er ging iets mis probeer opnieuw ");
-                return;
-            }
-
 
 
         } 
@@ -196,6 +232,7 @@ namespace SchoolAdmin
             catch (DuplicateDataException e)
             {
                 var objecId = (Course)e.Object2;
+
                 Console.WriteLine(e.Message);
                 Console.WriteLine($"Id van de reeds bestaande curus is: {objecId.Id}");
             }
