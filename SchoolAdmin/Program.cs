@@ -27,6 +27,8 @@ namespace SchoolAdmin
                 Console.WriteLine("8. Cursus toevoegen");
                 Console.WriteLine("9. Vakinschrijving toevoegen");
                 Console.WriteLine("10. Inschrijvingsgegevens tonen");
+                Console.WriteLine("11. Studenten tonen");
+
 
 
 
@@ -70,7 +72,10 @@ namespace SchoolAdmin
                     case "10":
                         ShowCourseRegistrations();
                         break;
-
+                    case "11":
+                        ShowStudents();
+                        break;
+                              
                     case "stop":
                         running = false;
                          break;
@@ -87,6 +92,38 @@ namespace SchoolAdmin
         }
 
 
+
+        public static void ShowStudents()
+        {
+            Console.WriteLine("In zelke volgorde zil jij studenten tonen ? ");
+            Console.WriteLine("1. Alfabetisch stijgend");
+            Console.WriteLine("2. Alfabetisch aflopend");
+
+            string keuze = Console.ReadLine().Trim();
+            ImmutableList<Student> soorted;
+
+            if (keuze == "1")
+            {
+               soorted = Student.AllStudents.Sort(new StudentsAscendingByName());
+;           }
+            else if (keuze == "2")
+            {
+               soorted = Student.AllStudents.Sort(new StudentsDescendingByName());
+            }
+            else
+            {
+                Console.WriteLine("Deze keuze kan ik niet !");
+                return; 
+            }
+
+
+            foreach (var item in soorted)
+            {
+                Console.WriteLine($"{item}");
+            }
+
+
+        }
 
         public static void ShowCourseRegistrations()
         {
